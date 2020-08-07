@@ -26,8 +26,9 @@ class GamesList extends Component {
 			<MovieDetails
 				key={movie.id}
 				title={movie.title}
-				bg={movie.medium_cover_image}
+				bg={movie.large_cover_image} //
 				summary={movie.summary}
+				year={movie.year}
 			/>
 		))
 
