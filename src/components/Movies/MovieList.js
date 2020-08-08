@@ -1,43 +1,37 @@
 //dependencies
-import React, { Component } from "react"
-import axios from "axios"
+import React from "react"
 
 //imports
 import MovieDetails from "./MovieDetails"
 
-class GamesList extends Component {
-	state = {
-		movies: [],
-	}
+const MovieList = ({ moviearray }) => {
+	// async componentDidMount() {
+	// 	const response = await axios.get("https://yts.mx/api/v2/list_movies.json", {
+	// 		params: {
+	// 			limit: 10,
+	// 		},
+	// 	})
+	// 	const { data } = response.data
+	// 	console.log(data)
+	// 	this.setState({ movies: data.movies })
+	// }
 
-	async componentDidMount() {
-		const response = await axios.get("https://yts.mx/api/v2/list_movies.json", {
-			params: {
-				limit: 10,
-			},
-		})
-		const { data } = response.data
-		console.log(data)
-		this.setState({ movies: data.movies })
-	}
+	const gamesList = moviearray.map((movie) => (
+		<MovieDetails
+			key={movie.id}
+			title={movie.title}
+			bg={movie.large_cover_image} //
+			summary={movie.summary}
+			year={movie.year}
+			id={movie.id}
+		/>
+	))
 
-	render() {
-		const gamesList = this.state.movies.map((movie) => (
-			<MovieDetails
-				key={movie.id}
-				title={movie.title}
-				bg={movie.large_cover_image} //
-				summary={movie.summary}
-				year={movie.year}
-			/>
-		))
-
-		return (
-			<div className="container mx-auto">
-				<div className="row">{gamesList}</div>
-			</div>
-		)
-	}
+	return (
+		<div className="container mx-auto">
+			<div className="row">{gamesList}</div>
+		</div>
+	)
 }
 
-export default GamesList
+export default MovieList

@@ -1,16 +1,31 @@
 //dependencies
-import React from "react"
+import React, { Component } from "react"
 import "./App.css"
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 
 //imports
-import MovieList from "./components/Movies/MovieList"
+import Navbar from "./components/Navbar/Navbar"
+import Search from "./components/Pages/Search"
+import About from "./components/Pages/About"
+import Home from "./components/Pages/Home"
+import SingleMovie from "./components/Movies/SingleMovie"
 
-function App() {
-	return (
-		<div className="App">
-			<MovieList />
-		</div>
-	)
+class App extends Component {
+	render() {
+		return (
+			<Router>
+				<div className="App">
+					<Navbar />
+					<Switch>
+						<Route exact path="/" component={Home} />
+						<Route exact path="/search" component={Search} />
+						<Route exact path="/about" component={About} />
+						<Route exact path="/movie/:title" component={SingleMovie} />
+					</Switch>
+				</div>
+			</Router>
+		)
+	}
 }
 
 export default App

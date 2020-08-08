@@ -1,4 +1,5 @@
 import React from "react"
+import { Link } from "react-router-dom"
 
 const Moviedetails = (props) => {
 	return (
@@ -19,16 +20,18 @@ const Moviedetails = (props) => {
 				<h6 className="card-subtitle mb-2 text-muted">
 					Release Year - {props.year}
 				</h6>
-				<div className="card-text text-wrap overflow-auto" style={{maxHeight:"17rem"}}>{props.summary}</div>
+				<div
+					className="card-text text-wrap overflow-auto"
+					style={{ maxHeight: "17rem" }}
+				>
+					{props.summary}
+				</div>
 			</div>
-			<a href="#" className="card-footer  mt-0 bg-white">
+			<Link to={`/movie/${props.title}`} className="card-footer  mt-0 bg-white">
 				Know More
-			</a>
+			</Link>
 		</div>
 	)
 }
 
 export default Moviedetails
-{
-	/* m-0 bg-white */
-}
