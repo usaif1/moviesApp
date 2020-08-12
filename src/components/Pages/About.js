@@ -8,6 +8,7 @@ const About = () => {
 			</div>
 			<div className="mt-5 text-left">
 				<h5>This app was developed to help you find information about your favourite movies</h5>
+                <h6>Made By Saif Ullah</h6>
 			</div>
 		</div>
 	)
