@@ -18,12 +18,17 @@ export class SingleMovie extends Component {
 	}
 
 	async componentDidMount() {
-		const response = await axios.get("http://www.omdbapi.com", {
-			params: {
-				apikey: "1c97a54a",
-				t: this.props.match.params.title,
-			},
-		})
+		console.log(this.props.match.params.title)
+		const response = await axios.get(
+			"http://www.omdbapi.com/?apikey=1c97a54a&&t=" +
+				this.props.match.params.title
+			// {
+			// 	params: {
+			// 		apikey: "1c97a54a",
+			// 		// t: this.props.match.params.title,
+			// 	},
+			// }
+		)
 		console.log(response.data)
 		// console.log(this.props.match.params.title)
 
