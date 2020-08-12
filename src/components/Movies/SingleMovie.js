@@ -1,6 +1,9 @@
 import React, { Component } from "react"
 import axios from "axios"
 import { Link } from "react-router-dom"
+import imdb from "../../assets/imdb-icon.jpg"
+import rottenTomatoes from "../../assets/rotten-tomatoes.png"
+import metacritic from "../../assets/metacritic-icon.png"
 
 export class SingleMovie extends Component {
 	state = {
@@ -77,19 +80,43 @@ export class SingleMovie extends Component {
 						<img src={this.state.poster} alt="Movie Poster Large"></img>
 					</div>
 					<div className="ratings">
-						<h6 className="text-left ml-5">Ratings</h6>
-						<p className="text-left ml-5">IMDb - {ratings[0]} </p>
-						<p className="text-left ml-5">Rotten tomatoes - {ratings[1]}</p>
-						<p className="text-left ml-5">Metacritic - {ratings[2]}</p>
+						<h4 className="text-left ml-5">Ratings</h4>
+						<p className="text-left ml-5">
+							<img src={imdb} alt="imdb-icon" style={{ width: "7%" }} />-
+							{ratings[0]}
+						</p>
+						<p className="text-left ml-5">
+							<img
+								src={rottenTomatoes}
+								alt="rotten-tomatoes icon"
+								style={{ width: "7%" }}
+							/>
+							- {ratings[1]}
+						</p>
+						<p className="text-left ml-5">
+							<img
+								src={metacritic}
+								alt="metacritic-icon"
+								style={{ width: "7%" }}
+							/>
+							- {ratings[2]}
+						</p>
 					</div>
 				</div>
 				<div className="cast details and genre mt-3">
-					<p className="text-left">Cast - {this.state.cast}</p>
-					<p className="text-left">Director(s) - {this.state.director}</p>
-					<p className="text-left">Genre - {this.state.genre}</p>
+					<p className="text-left">
+						<span className="font-weight-bold">Cast</span> - {this.state.cast}
+					</p>
+					<p className="text-left">
+						<span className="font-weight-bold">Director(s)</span> -{" "}
+						{this.state.director}
+					</p>
+					<p className="text-left">
+						<span className="font-weight-bold">Genre</span> - {this.state.genre}
+					</p>
 				</div>
 				<div>
-					<h6 className="text-left">Summary -</h6>
+					<h6 className="text-left font-weight-bold">Summary -</h6>
 				</div>
 				<div className="text-left">
 					<p>{this.state.plot}</p>

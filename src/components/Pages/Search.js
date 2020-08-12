@@ -48,9 +48,9 @@ class Search extends Component {
 			: (allmovies = null)
 
 		const errComp = (
-			<div className="alert alert-danger" role="alert" style={{width:"45%", margin:"auto"}}>
+			<div className="alert alert-danger w-50 m-auto" role="alert">
 				<p className="font-weight-bolder">
-					Error - No Movie Found. Please Check Your Search Term{" "}
+					Error! - No Movie Found. Please Check Your Search Term
 				</p>
 			</div>
 		)
