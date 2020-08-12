@@ -7,6 +7,7 @@ class Search extends Component {
 	state = {
 		title: "",
 		movies: [],
+		error: false,
 	}
 
 	onChangeHandler = (e) => {
@@ -16,13 +17,27 @@ class Search extends Component {
 	onSubmitHandler = async (e) => {
 		e.preventDefault()
 		const { title } = this.state
-		const response = await axios.get("https://yts.mx/api/v2/list_movies.json", {
-			params: {
-				query_term: title,
-				sort_by: "rating",
-			},
-		})
-		this.setState({ movies: response.data.data.movies })
+
+		try {
+			const response = await axios.get(
+				"https://yts.mx/api/v2/list_movies.json",
+				{
+					params: {
+						query_term: title.trim(),
+						sort_by: "rating",
+					},
+				}
+			)
+			console.log(response.data)
+			if (response.data.data.movie_count === 0) {
+				this.setState({ error: true })
+			} else {
+				this.setState({ error: false, movies: response.data.data.movies })
+			}
+			console.log(this.state)
+		} catch (err) {
+			this.setState({ error: "Server side error" })
+		}
 	}
 
 	render() {
@@ -31,6 +46,14 @@ class Search extends Component {
 		this.state.movies.length > 0
 			? (allmovies = <MovieList moviearray={this.state.movies} />)
 			: (allmovies = null)
+
+		const errComp = (
+			<div className="alert alert-danger" role="alert" style={{width:"45%", margin:"auto"}}>
+				<p className="font-weight-bolder">
+					Error - No Movie Found. Please Check Your Search Term{" "}
+				</p>
+			</div>
+		)
 
 		return (
 			<div className="container">
@@ -60,7 +83,8 @@ class Search extends Component {
 						</div>
 					</div>
 				</form>
-				{allmovies}
+				{this.state.error ? errComp : allmovies}
+				{/* {allmovies} */}
 				{/* {this.state.movies.length > 0 ? (
 					<MovieList moviearray={this.state.movies} />
 				) : null} */}
