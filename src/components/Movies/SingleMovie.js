@@ -73,7 +73,9 @@ export class SingleMovie extends Component {
 			<div className="container">
 				<div>
 					<h2 className="text-left">{this.state.title} </h2>
-					<p className="text-left">Release Date - {this.state.released}</p>
+					<h6 className="text-left font-italic">
+						Release Date - {this.state.released}
+					</h6>
 				</div>
 				<div className="img and ratings" style={{ display: "flex" }}>
 					<div className="movie poster">
