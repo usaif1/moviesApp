@@ -1,85 +1,38 @@
 import React, { Component } from "react"
-import axios from "axios"
 import { Link } from "react-router-dom"
+import { fetchMovieDetails } from "../../actions/movieActions"
+import { connect } from "react-redux"
 import imdb from "../../assets/imdb-icon.jpg"
 import rottenTomatoes from "../../assets/rotten-tomatoes.png"
 import metacritic from "../../assets/metacritic-icon.png"
 
 export class SingleMovie extends Component {
-	state = {
-		title: "",
-		year: "",
-		rated: "",
-		poster: "",
-		released: "",
-		runtime: "",
-		genre: "",
-		director: "",
-		plot: "",
-		cast: "",
-		rating: [],
-	}
-
 	async componentDidMount() {
-		console.log(this.props.match.params.title)
-		const response = await axios.get(
-			"https://www.omdbapi.com/?apikey=1c97a54a&&t=" +
-				this.props.match.params.title
-			// {
-			// 	params: {
-			// 		apikey: "1c97a54a",
-			// 		// t: this.props.match.params.title,
-			// 	},
-			// }
-		)
-		console.log(response.data)
-		// console.log(this.props.match.params.title)
-
-		const {
-			Title,
-			Released,
-			Rated,
-			Poster,
-			Runtime,
-			Genre,
-			Director,
-			Plot,
-			Actors,
-			Ratings,
-		} = response.data
-
-		this.setState({
-			title: Title,
-			year: Released,
-			rated: Rated,
-			poster: Poster,
-			released: Released,
-			runtime: Runtime,
-			genre: Genre,
-			director: Director,
-			plot: Plot,
-			cast: Actors,
-			rating: Ratings,
-		})
-		console.log(this.state.cast)
+				const {
+			params: { title },
+		} = this.props.match
+		this.props.fetchMovieDetails(title)
 	}
 
 	render() {
-		const ratings = this.state.rating.map((r) => {
+		const ratings = this.props.movieDetails.rating.map((r) => {
 			return r.Value
 		})
 
 		return (
 			<div className="container">
 				<div>
-					<h2 className="text-left">{this.state.title} </h2>
+					<h2 className="text-left">{this.props.movieDetails.title} </h2>
 					<h6 className="text-left font-italic">
-						Release Date - {this.state.released}
+						Release Date - {this.props.movieDetails.released}
 					</h6>
 				</div>
 				<div className="img and ratings" style={{ display: "flex" }}>
 					<div className="movie poster">
-						<img src={this.state.poster} alt="Movie Poster Large"></img>
+						<img
+							src={this.props.movieDetails.poster}
+							alt="Movie Poster Large"
+						></img>
 					</div>
 					<div className="ratings">
 						<h4 className="text-left ml-5">Ratings</h4>
@@ -107,21 +60,23 @@ export class SingleMovie extends Component {
 				</div>
 				<div className="cast details and genre mt-3">
 					<p className="text-left">
-						<span className="font-weight-bold">Cast</span> - {this.state.cast}
+						<span className="font-weight-bold">Cast</span> -{" "}
+						{this.props.movieDetails.cast}
 					</p>
 					<p className="text-left">
 						<span className="font-weight-bold">Director(s)</span> -{" "}
-						{this.state.director}
+						{this.props.movieDetails.director}
 					</p>
 					<p className="text-left">
-						<span className="font-weight-bold">Genre</span> - {this.state.genre}
+						<span className="font-weight-bold">Genre</span> -{" "}
+						{this.props.movieDetails.genre}
 					</p>
 				</div>
 				<div>
 					<h6 className="text-left font-weight-bold">Summary -</h6>
 				</div>
 				<div className="text-left">
-					<p>{this.state.plot}</p>
+					<p>{this.props.movieDetails.plot}</p>
 				</div>
 				<div className="back to search">
 					<Link to="/search">
@@ -133,4 +88,8 @@ export class SingleMovie extends Component {
 	}
 }
 
-export default SingleMovie
+const mapStateToProps = (state) => ({
+	movieDetails: state.movie,
+})
+
+export default connect(mapStateToProps, { fetchMovieDetails })(SingleMovie)

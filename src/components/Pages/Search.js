@@ -1,96 +1,67 @@
-import React, { Component } from "react"
-import axios from "axios"
-
+import React from "react"
+import { connect } from "react-redux"
+import { inputText, fetchMovies } from "../../actions/moviesActions"
 import MovieList from "../Movies/MovieList"
 
-class Search extends Component {
-	state = {
-		title: "",
-		movies: [],
-		error: false,
+const Search = (props) => {
+	const onChangeHandler = (e) => {
+		props.inputText(e.target.value)
 	}
 
-	onChangeHandler = (e) => {
-		this.setState({ [e.target.name]: e.target.value })
-	}
-
-	onSubmitHandler = async (e) => {
+	const onSubmitHandler = (e) => {
 		e.preventDefault()
-		const { title } = this.state
-
-		try {
-			const response = await axios.get(
-				"https://yts.mx/api/v2/list_movies.json",
-				{
-					params: {
-						query_term: title.trim(),
-						sort_by: "rating",
-					},
-				}
-			)
-			console.log(response.data)
-			if (response.data.data.movie_count === 0) {
-				this.setState({ error: true })
-			} else {
-				this.setState({ error: false, movies: response.data.data.movies })
-			}
-			console.log(this.state)
-		} catch (err) {
-			this.setState({ error: "Server side error" })
-		}
+		const {
+			search: { title },
+		} = props
+		props.fetchMovies(title)
 	}
 
-	render() {
-		let allmovies
+	let allmovies
+	const movies = props.search.movies
+	props.search.movies.length > 0
+		? (allmovies = <MovieList moviearray={movies} />)
+		: (allmovies = null)
 
-		this.state.movies.length > 0
-			? (allmovies = <MovieList moviearray={this.state.movies} />)
-			: (allmovies = null)
+	const errComp = (
+		<div className="alert alert-danger w-50 m-auto" role="alert">
+			<p className="font-weight-bolder">
+				Error! - No Movie Found. Please Check Your Search Term
+			</p>
+		</div>
+	)
 
-		const errComp = (
-			<div className="alert alert-danger w-50 m-auto" role="alert">
-				<p className="font-weight-bolder">
-					Error! - No Movie Found. Please Check Your Search Term
-				</p>
-			</div>
-		)
-
-		return (
-			<div className="container">
-				<form
-					style={{ width: "65%", margin: "auto" }}
-					onSubmit={this.onSubmitHandler}
-				>
-					<div className="input-group mb-3">
-						<input
-							type="text"
-							className="form-control"
-							placeholder="Search Movie"
-							aria-label="Search Movie"
-							aria-describedby="button-addon2"
-							name="title"
-							onChange={this.onChangeHandler}
-							value={this.state.title}
-						/>
-						<div className="input-group-append">
-							<button
-								className="btn btn-outline-secondary"
-								type="submit"
-								id="button-addon2"
-							>
-								Search
-							</button>
-						</div>
+	return (
+		<div className="container">
+			<form style={{ width: "65%", margin: "auto" }} onSubmit={onSubmitHandler}>
+				<div className="input-group mb-3">
+					<input
+						type="text"
+						className="form-control"
+						placeholder="Search Movie"
+						aria-label="Search Movie"
+						aria-describedby="button-addon2"
+						name="title"
+						onChange={(e) => onChangeHandler(e)}
+						value={props.search.title}
+					/>
+					<div className="input-group-append">
+						<button
+							className="btn btn-outline-secondary"
+							type="submit"
+							id="button-addon2"
+						>
+							Search
+						</button>
 					</div>
-				</form>
-				{this.state.error ? errComp : allmovies}
-				{/* {allmovies} */}
-				{/* {this.state.movies.length > 0 ? (
-					<MovieList moviearray={this.state.movies} />
-				) : null} */}
-			</div>
-		)
-	}
+				</div>
+			</form>
+			{props.search.error ? errComp : allmovies}
+		</div>
+	)
 }
 
-export default Search
+const mapStateToProps = (state) => ({
+	search: state.movies,
+})
+
+export default connect(mapStateToProps, { inputText, fetchMovies })(Search)
