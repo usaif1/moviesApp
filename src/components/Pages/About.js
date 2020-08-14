@@ -10,7 +10,7 @@ const About = () => {
 			</div>
 			<div className="mt-5 text-left">
 				<h3>Movie Finder App</h3>
-				<h4>v1.0.0</h4>
+				<h4 className="font-italic">v1.0.0</h4>
 				<h5>
 					This app was developed to help you find information about your
 					favourite movies
@@ -19,7 +19,10 @@ const About = () => {
 			<div className="mt-5 text-left">
 				<ul>
 					<li>
-						<p>The app was built using React JS {REACT_VERSION} and uses Redux for state management.</p>
+						<p>
+							The app was built using React JS {REACT_VERSION} and uses Redux
+							for state management.
+						</p>
 					</li>
 					<li>
 						<p>
@@ -47,7 +50,9 @@ const About = () => {
 				</ul>
 			</div>
 			<div>
-				<footer className="fixed-bottom font-weight-bolder mb-5">Made By Saif Ullah</footer>
+				<footer className="fixed-bottom font-weight-bolder mb-5">
+					Made By Saif Ullah
+				</footer>
 			</div>
 		</div>
 	)
