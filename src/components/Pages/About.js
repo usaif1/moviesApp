@@ -44,7 +44,7 @@ const About = () => {
 						<p>
 							The movie details are fetched from{" "}
 							<span className="font-weight-bolder">OMDB API</span> and the
-							design of the page was made possible by implementing Boostrap 4
+							design of the page was made possible by using Boostrap 4.
 						</p>
 					</li>
 				</ul>
