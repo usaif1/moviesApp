@@ -11,6 +11,7 @@ const initialState = {
 	director: "",
 	plot: "",
 	cast: "",
+	imdbId: null,
 	rating: [],
 }
 
@@ -30,6 +31,7 @@ export default function (state = initialState, action) {
 				plot: action.payload.Plot,
 				cast: action.payload.Actors,
 				rating: action.payload.Ratings,
+				imdbId: action.payload.imdbID,
 			}
 		}
 		default: {

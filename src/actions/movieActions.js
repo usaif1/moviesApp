@@ -16,6 +16,7 @@ export const fetchMovieDetails = (title) => async (dispatch) => {
 		Plot,
 		Actors,
 		Ratings,
+		imdbID,
 	} = response.data
 
 	const payload = {
@@ -29,6 +30,7 @@ export const fetchMovieDetails = (title) => async (dispatch) => {
 		Plot,
 		Actors,
 		Ratings,
+		imdbID
 	}
 
 	dispatch({ type: FETCH_MOVIE_DETAILS, payload: payload })
